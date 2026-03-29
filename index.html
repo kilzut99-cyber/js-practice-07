@@ -1,160 +1,111 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html> <!-- Объявление типа документа для браузера -->
+<html lang="ru"> <!-- Указание языка контента — русский -->
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Практическая работа №7 — События в JS</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" /> <!-- Установка кодировки UTF-8 для поддержки кириллицы -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Настройка масштаба для мобильных устройств -->
+    <title>Практическая работа №7 — События в JS</title> <!-- Заголовок вкладки в браузере -->
+    <link rel="stylesheet" href="style.css" /> <!-- Подключение внешнего файла стилей CSS -->
 </head>
 <body>
+<!-- ==== ПРИВЕТСТВЕННЫЙ БАННЕР (PRO: закрыть через { once: true }) ==== -->
+<div id="welcome-banner" class="welcome-banner"> <!-- Блок приветствия пользователя -->
+    <p>👋 Добро пожаловать! Это практическая работа по событиям в JS. Удачи!</p> <!-- Текст баннера -->
+    <button id="close-banner-btn">✕ Закрыть</button> <!-- Кнопка для скрытия баннера -->
+</div>
 
-  <!-- ==== ПРИВЕТСТВЕННЫЙ БАННЕР (PRO: закрыть через { once: true }) ==== -->
-  <div id="welcome-banner" class="welcome-banner">
-    <p>👋 Добро пожаловать! Это практическая работа по событиям в JS. Удачи!</p>
-    <button id="close-banner-btn">✕ Закрыть</button>
-  </div>
+<!-- ==== ШАПКА ==== -->
+<header> <!-- Верхняя секция страницы -->
+    <h1>Практическая работа №7: События в JS</h1> <!-- Главный заголовок проекта -->
+    <p class="subtitle">Обработчики событий, всплытие и погружение, делегирование</p> <!-- Подзаголовок с темами занятия -->
+</header>
 
-  <!-- ==== ШАПКА ==== -->
-  <header>
-    <h1>Практическая работа №7: События в JS</h1>
-    <p class="subtitle">Обработчики событий, всплытие и погружение, делегирование</p>
-  </header>
-
-  <main>
-
+<main> <!-- Основное содержимое страницы -->
     <!-- ==== СЕКЦИЯ 1: ФОРМА ДОБАВЛЕНИЯ ЗАДАЧИ ==== -->
-    <section class="card" id="form-section">
-      <h2>Задание 1 — Добавить задачу</h2>
-
-      <div class="form-group">
-        <label for="task-input">Текст задачи:</label>
-        <input
-          type="text"
-          id="task-input"
-          placeholder="Минимум 3 символа..."
-          maxlength="80"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="priority-select">Приоритет:</label>
-        <select id="priority-select">
-          <option value="low">🟢 Низкий</option>
-          <option value="medium" selected>🟡 Средний</option>
-          <option value="high">🔴 Высокий</option>
-        </select>
-      </div>
-
-      <div class="buttons">
-        <button id="add-task-btn">＋ Добавить задачу</button>
-      </div>
-
-      <!-- JS выводит сюда сообщение об ошибке валидации -->
-      <p id="validation-msg" class="validation-msg" aria-live="polite"></p>
+    <section class="card" id="form-section"> <!-- Контейнер формы ввода -->
+        <h2>Задание 1 — Добавить задачу</h2> <!-- Заголовок секции создания задач -->
+        <div class="form-group"> <!-- Группа для ввода текста -->
+            <label for="task-input">Текст задачи:</label> <!-- Текстовая подпись к полю -->
+            <input type="text" id="task-input" placeholder="Минимум 3 символа..." maxlength="80" autocomplete="off" /> <!-- Поле ввода текста -->
+        </div>
+        <div class="form-group"> <!-- Группа для выбора приоритета -->
+            <label for="priority-select">Приоритет:</label> <!-- Подпись к выпадающему списку -->
+            <select id="priority-select"> <!-- Список выбора уровня важности -->
+                <option value="low">🟢 Низкий</option> <!-- Опция: Низкий приоритет -->
+                <option value="medium" selected>🟡 Средний</option> <!-- Опция: Средний приоритет (выбрана по умолчанию) -->
+                <option value="high">🔴 Высокий</option> <!-- Опция: Высокий приоритет -->
+            </select>
+        </div>
+        <div class="buttons"> <!-- Контейнер для кнопок управления формой -->
+            <button id="add-task-btn">＋ Добавить задачу</button> <!-- Кнопка для создания новой карточки -->
+        </div>
+        <!-- JS выводит сюда сообщение об ошибке валидации -->
+        <p id="validation-msg" class="validation-msg" aria-live="polite"></p> <!-- Элемент для вывода предупреждений из JS -->
     </section>
 
     <!-- ==== СЕКЦИЯ 2: УПРАВЛЕНИЕ ==== -->
-    <section class="card" id="controls-section">
-      <h2>Управление доской</h2>
-
-      <div class="controls-row">
-        <div class="buttons">
-          <button id="toggle-theme-btn">🌙 Переключить тему</button>
-          <button id="clear-done-btn" class="btn-secondary">🗑 Очистить «Готово»</button>
-          <!-- PRO: кнопка режима просмотра -->
-          <button id="view-mode-btn" class="btn-secondary">👁 Режим просмотра</button>
+    <section class="card" id="controls-section"> <!-- Секция глобальных настроек доски -->
+        <h2>Управление доской</h2> <!-- Заголовок управления -->
+        <div class="controls-row"> <!-- Контейнер для кнопок и счетчика -->
+            <div class="buttons"> <!-- Группа функциональных кнопок -->
+                <button id="toggle-theme-btn">🌙 Переключить тему</button> <!-- Переключатель темной/светлой темы -->
+                <button id="clear-done-btn" class="btn-secondary">🗑 Очистить «Готово»</button> <!-- Кнопка массового удаления завершенных задач -->
+                <!-- PRO: кнопка режима просмотра -->
+                <button id="view-mode-btn" class="btn-secondary">👁 Режим просмотра</button> <!-- Кнопка включения PRO-режима блокировки кликов -->
+            </div>
+            <p class="counter-line">Задач на доске: <span id="task-count">0</span></p> <!-- Индикатор общего количества задач -->
         </div>
-        <p class="counter-line">
-          Задач на доске: <span id="task-count">0</span>
-        </p>
-      </div>
     </section>
 
     <!-- ==== СЕКЦИЯ 3: KANBAN-ДОСКА ==== -->
-    <section id="board-section">
-      <div id="board">
-
-        <!-- КОЛОНКА 1: К выполнению -->
-        <div class="column" data-status="todo">
-          <h2 class="column-title">
-            📋 К выполнению
-            <span class="column-count">0</span>
-          </h2>
-          <!-- JS добавляет карточки сюда -->
-          <div class="task-list" id="todo-list"></div>
+    <section id="board-section"> <!-- Секция с колонками задач -->
+        <div id="board"> <!-- Общий контейнер доски для реализации делегирования событий -->
+            <!-- КОЛОНКА 1: К выполнению -->
+            <div class="column" data-status="todo"> <!-- Секция статуса "К выполнению" -->
+                <h2 class="column-title">📋 К выполнению <span class="column-count">0</span></h2> <!-- Заголовок и счетчик первой колонки -->
+                <!-- JS добавляет карточки сюда -->
+                <div class="task-list" id="todo-list"></div> <!-- Пустой контейнер для динамических карточек -->
+            </div>
+            <!-- КОЛОНКА 2: В работе -->
+            <div class="column" data-status="in-progress"> <!-- Секция статуса "В работе" -->
+                <h2 class="column-title">⚙️ В работе <span class="column-count">0</span></h2> <!-- Заголовок и счетчик второй колонки -->
+                <div class="task-list" id="in-progress-list"></div> <!-- Контейнер для карточек в работе -->
+            </div>
+            <!-- КОЛОНКА 3: Готово -->
+            <div class="column" data-status="done"> <!-- Секция статуса "Готово" -->
+                <h2 class="column-title">✅ Готово <span class="column-count">0</span></h2> <!-- Заголовок и счетчик третьей колонки -->
+                <div class="task-list" id="done-list"></div> <!-- Контейнер для завершенных карточек -->
+            </div>
         </div>
-
-        <!-- КОЛОНКА 2: В работе -->
-        <div class="column" data-status="in-progress">
-          <h2 class="column-title">
-            ⚙️ В работе
-            <span class="column-count">0</span>
-          </h2>
-          <div class="task-list" id="in-progress-list"></div>
-        </div>
-
-        <!-- КОЛОНКА 3: Готово -->
-        <div class="column" data-status="done">
-          <h2 class="column-title">
-            ✅ Готово
-            <span class="column-count">0</span>
-          </h2>
-          <div class="task-list" id="done-list"></div>
-        </div>
-
-      </div>
     </section>
 
     <!-- ==== СЕКЦИЯ 4: ПОДСКАЗКИ ==== -->
-    <section class="card hints-section" id="hints-section">
-      <h2>📘 Подсказки</h2>
-      <ul>
-        <li>
-          <strong>Делегирование событий</strong> — вешайте один обработчик на <code>#board</code>,
-          а не на каждую кнопку карточки. Используйте <code>e.target.closest('[data-action]')</code>
-          для определения нажатой кнопки.
-        </li>
-        <li>
-          <strong>e.stopPropagation()</strong> — останавливает всплытие события вверх по DOM-дереву.
-          Нужен, когда клик на кнопку внутри карточки не должен «выделять» саму карточку.
-        </li>
-        <li>
-          <strong>e.target vs e.currentTarget</strong> — <code>target</code> — элемент, на котором
-          произошло событие; <code>currentTarget</code> — элемент, на котором висит обработчик.
-        </li>
-        <li>
-          <strong>closest(selector)</strong> — ищет ближайшего предка (включая сам элемент),
-          соответствующего селектору. Возвращает <code>null</code>, если не найден.
-        </li>
-        <li>
-          <strong>{ once: true }</strong> — опция <code>addEventListener</code>: обработчик
-          сработает ровно один раз и автоматически удалится.
-        </li>
-        <li>
-          <strong>removeEventListener</strong> — требует ту же именованную функцию, что передавалась
-          в <code>addEventListener</code>. Анонимные стрелки удалить нельзя!
-        </li>
-      </ul>
+    <section class="card hints-section" id="hints-section"> <!-- Обучающий блок по темам ТЗ -->
+        <h2>📘 Подсказки</h2> <!-- Заголовок секции подсказок -->
+        <ul> <!-- Список ключевых понятий -->
+            <li><strong>Делегирование событий</strong> — вешайте один обработчик на <code>#board</code>, а не на каждую кнопку карточки. Используйте <code>e.target.closest('[data-action]')</code> для определения нажатой кнопки.</li> <!-- Подсказка по делегированию -->
+            <li><strong>e.stopPropagation()</strong> — останавливает всплытие события вверх по DOM-дереву. Нужен, когда клик на кнопку внутри карточки не должен «выделять» саму карточку.</li> <!-- Подсказка по всплытию -->
+            <li><strong>e.target vs e.currentTarget</strong> — <code>target</code> — элемент, на котором произошло событие; <code>currentTarget</code> — элемент, на котором висит обработчик.</li> <!-- Различие целей события -->
+            <li><strong>closest(selector)</strong> — ищет ближайшего предка (включая сам элемент), соответствующего селектору. Возвращает <code>null</code>, если не найден.</li> <!-- Описание метода поиска -->
+            <li><strong>{ once: true }</strong> — опция <code>addEventListener</code>: обработчик сработает ровно один раз и автоматически удалится.</li> <!-- Описание опции однократного срабатывания -->
+            <li><strong>removeEventListener</strong> — требует ту же именованную функцию, что передавалась в <code>addEventListener</code>. Анонимные стрелки удалить нельзя!</li> <!-- Правило удаления слушателей -->
+        </ul>
     </section>
 
     <!-- ==== СЕКЦИЯ 5: ЧЕК-ЛИСТ СДАЧИ ==== -->
-    <section class="card" id="checklist-section">
-      <h2>✅ Чек-лист сдачи</h2>
-      <ol>
-        <li>Проект запускается через Live Server, в консоли нет ошибок.</li>
-        <li>Репозиторий <code>js-practice-07</code> создан и загружен на GitHub.</li>
-        <li>Папка <code>screenshots/</code> содержит минимум 5 скриншотов.</li>
-        <li>Возле каждого ключевого вызова (<code>addEventListener</code>, <code>stopPropagation</code>, <code>closest</code>) есть комментарий «ПОЧЕМУ?».</li>
-        <li>README.md заполнен: описание + ответы на 6 вопросов для интервью.</li>
-        <li>Нигде нет <code>innerHTML</code> для пользовательских данных.</li>
-        <li>Нет <code>onclick</code> и других inline-обработчиков в HTML.</li>
-        <li>Делегирование реализовано: один обработчик на <code>#board</code> (уровень JUNIOR и выше).</li>
-      </ol>
+    <section class="card" id="checklist-section"> <!-- Блок самопроверки студента -->
+        <h2>✅ Чек-лист сдачи</h2> <!-- Заголовок чек-листа -->
+        <ol> <!-- Нумерованный список критериев -->
+            <li>Проект запускается через Live Server, в консоли нет ошибок.</li> <!-- Критерий работоспособности -->
+            <li>Репозиторий <code>js-practice-07</code> создан и загружен на GitHub.</li> <!-- Критерий загрузки в Git -->
+            <li>Папка <code>screenshots/</code> содержит минимум 5 скриншотов.</li> <!-- Требование к документации -->
+            <li>Возле каждого ключевого вызова (<code>addEventListener</code>, <code>stopPropagation</code>, <code>closest</code>) есть комментарий «ПОЧЕМУ?».</li> <!-- Требование к пояснениям в коде -->
+            <li>README.md заполнен: описание + ответы на 6 вопросов для интервью.</li> <!-- Требование к оформлению README -->
+            <li>Нигде нет <code>innerHTML</code> для пользовательских данных.</li> <!-- Критерий безопасности XSS -->
+            <li>Нет <code>onclick</code> и других inline-обработчиков в HTML.</li> <!-- Требование к чистоте кода -->
+            <li>Делегирование реализовано: один обработчик на <code>#board</code> (уровень JUNIOR и выше).</li> <!-- Критерий уровня реализации -->
+        </ol>
     </section>
-
-  </main>
-
-  <script src="script.js"></script>
+</main>
+<script src="script.js"></script> <!-- Подключение исполняемого JS-файла -->
 </body>
 </html>

@@ -1,442 +1,439 @@
-/* ====
-   Практическая работа №7 — События в JS
-   Starter Kit: style_07.css
-   ==== */
+/* ==== Практическая работа №7 — События в JS. Starter Kit: style_07.css ==== */
 
 /* ---- СБРОС И БАЗОВЫЕ СТИЛИ ---- */
 *, *::before, *::after {
-  box-sizing: border-box;
+    box-sizing: border-box; /* Настройка блочной модели: границы входят в ширину элемента */
 }
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: #f0f4f8;
-  color: #1e293b;
-  transition: background 0.3s ease, color 0.3s ease;
+    font-family: Arial, sans-serif; /* Определение основного шрифта */
+    margin: 0; /* Удаление внешних отступов страницы */
+    padding: 20px; /* Добавление внутреннего отступа контента */
+    background: #f0f4f8; /* Фоновый цвет страницы */
+    color: #1e293b; /* Цвет основного текста */
+    transition: background 0.3s ease, color 0.3s ease; /* Плавный переход при смене цветовой темы */
 }
 
 /* ---- ТЁМНАЯ ТЕМА (добавляется через JS: body.classList.toggle('dark-mode')) ---- */
 body.dark-mode {
-  background: #0f172a;
-  color: #e2e8f0;
+    background: #0f172a; /* Темный фон для всей страницы */
+    color: #e2e8f0; /* Светлый цвет текста в темной теме */
 }
 
 body.dark-mode .card {
-  background: #1e293b;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    background: #1e293b; /* Фон карточек в темной теме */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Тень блоков в темной теме */
 }
 
 body.dark-mode input,
 body.dark-mode select {
-  background: #334155;
-  color: #e2e8f0;
-  border-color: #475569;
+    background: #334155; /* Фон полей ввода в темной теме */
+    color: #e2e8f0; /* Цвет текста в инпутах в темной теме */
+    border-color: #475569; /* Цвет рамки полей в темной теме */
 }
 
 body.dark-mode .column {
-  background: #1e293b;
+    background: #1e293b; /* Фон колонок в темной теме */
 }
 
 body.dark-mode .task-card {
-  background: #273549;
-  border-color: #334155;
+    background: #273549; /* Фон карточек задач в темной теме */
+    border-color: #334155; /* Рамка карточек в темной теме */
 }
 
 body.dark-mode .task-card h3 {
-  color: #e2e8f0;
+    color: #e2e8f0; /* Цвет заголовков задач в темной теме */
 }
 
 /* ---- ПРИВЕТСТВЕННЫЙ БАННЕР (PRO: закрыть через { once: true }) ---- */
 .welcome-banner {
-  background: #dbeafe;
-  border: 1px solid #93c5fd;
-  border-radius: 8px;
-  padding: 12px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+    background: #dbeafe; /* Фон приветственного баннера */
+    border: 1px solid #93c5fd; /* Рамка баннера */
+    border-radius: 8px; /* Скругление углов баннера */
+    padding: 12px 20px; /* Внутренние отступы баннера */
+    margin-bottom: 20px; /* Отступ снизу до контента */
+    display: flex; /* Использование флексбокса для расположения в ряд */
+    align-items: center; /* Центрирование элементов по вертикали */
+    justify-content: space-between; /* Распределение текста и кнопки по краям */
+    gap: 12px; /* Расстояние между элементами внутри */
+    flex-wrap: wrap; /* Перенос на новую строку при нехватке места */
 }
 
 body.dark-mode .welcome-banner {
-  background: #1e3a5f;
-  border-color: #3b82f6;
+    background: #1e3a5f; /* Цвет баннера в темной теме */
+    border-color: #3b82f6; /* Рамка баннера в темной теме */
 }
 
 .welcome-banner p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #1e40af;
+    margin: 0; /* Сброс отступов текста в баннере */
+    font-size: 0.95rem; /* Размер шрифта сообщения */
+    color: #1e40af; /* Цвет текста в светлой теме */
 }
 
 body.dark-mode .welcome-banner p {
-  color: #93c5fd;
+    color: #93c5fd; /* Цвет текста баннера в темной теме */
 }
 
 .welcome-banner button {
-  padding: 4px 12px;
-  font-size: 0.85rem;
-  background: #3b82f6;
+    padding: 4px 12px; /* Размеры кнопки в баннере */
+    font-size: 0.85rem; /* Размер текста кнопки */
+    background: #3b82f6; /* Цвет фона кнопки баннера */
 }
 
 /* ---- ШАПКА ---- */
 header {
-  margin-bottom: 24px;
+    margin-bottom: 24px; /* Отступ под шапкой */
 }
 
 header h1 {
-  margin: 0 0 4px;
-  font-size: 1.6rem;
+    margin: 0 0 4px; /* Сброс отступов заголовка */
+    font-size: 1.6rem; /* Размер главного заголовка */
 }
 
 .subtitle {
-  margin: 0;
-  color: #64748b;
-  font-size: 0.95rem;
+    margin: 0; /* Сброс отступов подзаголовка */
+    color: #64748b; /* Цвет подзаголовка */
+    font-size: 0.95rem; /* Размер шрифта подзаголовка */
 }
 
 body.dark-mode .subtitle {
-  color: #94a3b8;
+    color: #94a3b8; /* Цвет подзаголовка в темной теме */
 }
 
 /* ---- СЕКЦИИ-КАРТОЧКИ ---- */
 .card {
-  background: #ffffff;
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: #ffffff; /* Фон основных блоков (карточек) */
+    padding: 20px 24px; /* Внутренние отступы блоков */
+    margin-bottom: 20px; /* Расстояние между блоками */
+    border-radius: 10px; /* Скругление углов блоков */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Легкая тень блоков */
 }
 
 .card h2 {
-  margin: 0 0 14px;
-  font-size: 1.1rem;
-  color: #1e40af;
+    margin: 0 0 14px; /* Отступы заголовка внутри блока */
+    font-size: 1.1rem; /* Размер шрифта заголовка блока */
+    color: #1e40af; /* Цвет заголовков блоков */
 }
 
 body.dark-mode .card h2 {
-  color: #93c5fd;
+    color: #93c5fd; /* Цвет заголовков блоков в темной теме */
 }
 
 /* ---- ФОРМА ---- */
 .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
+    display: flex; /* Верстка элементов формы в ряд */
+    align-items: center; /* Центрирование элементов по вертикали */
+    gap: 10px; /* Расстояние между подписью и полем */
+    margin-bottom: 12px; /* Расстояние между группами ввода */
+    flex-wrap: wrap; /* Адаптивный перенос элементов формы */
 }
 
 .form-group label {
-  min-width: 130px;
-  font-weight: bold;
-  font-size: 0.9rem;
+    min-width: 130px; /* Минимальная ширина подписи для выравнивания */
+    font-weight: bold; /* Жирное начертание подписей */
+    font-size: 0.9rem; /* Размер шрифта подписей */
 }
 
-input[type="text"] {
-  flex: 1;
-  min-width: 200px;
-  padding: 8px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  transition: border-color 0.2s;
+input {
+    flex: 1; /* Поле ввода занимает все свободное место */
+    min-width: 200px; /* Минимальная ширина инпута */
+    padding: 8px 10px; /* Внутренние отступы инпута */
+    border: 1px solid #cbd5e1; /* Граница инпута */
+    border-radius: 6px; /* Скругление инпута */
+    font-size: 0.95rem; /* Размер текста в поле ввода */
+    transition: border-color 0.2s; /* Плавное изменение цвета рамки */
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-color: #3b82f6;
+input:focus {
+    outline: none; /* Удаление стандартного контура при фокусе */
+    border-color: #3b82f6; /* Цвет рамки при активном вводе */
 }
 
 select {
-  padding: 8px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  background: #fff;
-  cursor: pointer;
+    padding: 8px 10px; /* Размеры выпадающего списка */
+    border: 1px solid #cbd5e1; /* Граница списка */
+    border-radius: 6px; /* Скругление списка */
+    font-size: 0.95rem; /* Размер текста в списке */
+    background: #fff; /* Фон списка */
+    cursor: pointer; /* Вид курсора при наведении */
 }
 
 /* ---- УПРАВЛЕНИЕ ---- */
 .controls-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+    display: flex; /* Расположение кнопок и счетчика в ряд */
+    align-items: center; /* Выравнивание по центру высоты */
+    justify-content: space-between; /* Кнопки слева, счетчик справа */
+    flex-wrap: wrap; /* Перенос на узких экранах */
+    gap: 12px; /* Расстояние между элементами управления */
 }
 
 /* ---- КНОПКИ ---- */
 .buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+    display: flex; /* Группировка кнопок в ряд */
+    gap: 10px; /* Расстояние между кнопками */
+    flex-wrap: wrap; /* Перенос кнопок */
 }
 
 button {
-  padding: 8px 16px;
-  border: none;
-  background-color: #3b82f6;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease, opacity 0.2s;
+    padding: 8px 16px; /* Внутренние отступы кнопок */
+    border: none; /* Удаление границ */
+    background-color: #3b82f6; /* Основной цвет кнопок */
+    color: #fff; /* Цвет текста кнопок */
+    border-radius: 6px; /* Скругление кнопок */
+    cursor: pointer; /* Курсор при наведении */
+    font-size: 0.9rem; /* Размер шрифта кнопок */
+    transition: background-color 0.2s ease, opacity 0.2s; /* Плавность эффектов */
 }
 
 button:hover {
-  background-color: #2563eb;
+    background-color: #2563eb; /* Эффект при наведении на основную кнопку */
 }
 
 button.btn-secondary {
-  background-color: #64748b;
+    background-color: #64748b; /* Цвет второстепенных кнопок */
 }
 
 button.btn-secondary:hover {
-  background-color: #475569;
+    background-color: #475569; /* Эффект второстепенных кнопок */
 }
 
 button.btn-danger {
-  background-color: #ef4444;
+    background-color: #ef4444; /* Цвет кнопок удаления */
 }
 
 button.btn-danger:hover {
-  background-color: #dc2626;
+    background-color: #dc2626; /* Эффект кнопок удаления */
 }
 
-/* Активный режим просмотра */
+/* Активный режим просмотра (PRO) */
 button.view-mode-active {
-  background-color: #f59e0b;
+    background-color: #f59e0b; /* Цвет кнопки в режиме просмотра */
 }
 
 button.view-mode-active:hover {
-  background-color: #d97706;
+    background-color: #d97706; /* Эффект кнопки режима просмотра */
 }
 
 /* ---- СООБЩЕНИЕ ВАЛИДАЦИИ ---- */
 .validation-msg {
-  margin: 8px 0 0;
-  font-size: 0.88rem;
-  color: #ef4444;
-  min-height: 1.2em;
+    margin: 8px 0 0; /* Отступ сверху сообщения */
+    font-size: 0.88rem; /* Размер шрифта ошибки */
+    color: #ef4444; /* Красный цвет для ошибок */
+    min-height: 1.2em; /* Бронирование места под текст (чтобы контент не прыгал) */
 }
 
 /* ---- СЧЁТЧИК ---- */
 .counter-line {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #475569;
+    margin: 0; /* Сброс отступов счетчика */
+    font-size: 0.9rem; /* Размер текста счетчика */
+    color: #475569; /* Цвет текста счетчика */
 }
 
 #task-count {
-  font-weight: bold;
-  color: #1e40af;
+    font-weight: bold; /* Жирный шрифт числа */
+    color: #1e40af; /* Цвет числа в счетчике */
 }
 
 body.dark-mode #task-count {
-  color: #93c5fd;
+    color: #93c5fd; /* Цвет числа счетчика в темной теме */
 }
 
 /* ---- KANBAN-ДОСКА ---- */
 #board-section {
-  margin-bottom: 20px;
+    margin-bottom: 20px; /* Отступ под всей доской */
 }
 
 #board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+    display: grid; /* Включение сеточной верстки для колонок */
+    grid-template-columns: repeat(3, 1fr); /* Создание трех одинаковых колонок */
+    gap: 16px; /* Расстояние между колонками */
 }
 
 @media (max-width: 700px) {
-  #board {
-    grid-template-columns: 1fr;
-  }
+    #board {
+        grid-template-columns: 1fr; /* Переход в одну колонку на мобильных */
+    }
 }
 
 /* ---- КОЛОНКИ ---- */
 .column {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    background: #ffffff; /* Фон колонок */
+    border-radius: 10px; /* Скругление колонок */
+    padding: 16px; /* Внутренние отступы колонок */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Тень колонок */
+    min-height: 200px; /* Минимальная высота колонки */
+    display: flex; /* Флекс-контейнер для вертикального расположения */
+    flex-direction: column; /* Вертикальный стек элементов в колонке */
+    gap: 10px; /* Расстояние между заголовком и списком */
 }
 
 .column-title {
-  margin: 0;
-  font-size: 1rem;
-  color: #1e40af;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+    margin: 0; /* Сброс отступов заголовка колонки */
+    font-size: 1rem; /* Размер шрифта названия колонки */
+    color: #1e40af; /* Цвет названий колонок */
+    display: flex; /* Флекс для счетчика в заголовке */
+    align-items: center; /* Центрирование */
+    justify-content: space-between; /* Текст слева, счетчик справа */
+    gap: 8px; /* Отступ до счетчика */
 }
 
 body.dark-mode .column-title {
-  color: #93c5fd;
+    color: #93c5fd; /* Цвет названий колонок в темной теме */
 }
 
 .column-count {
-  background: #dbeafe;
-  color: #1e40af;
-  font-size: 0.8rem;
-  font-weight: bold;
-  padding: 2px 8px;
-  border-radius: 12px;
-  min-width: 24px;
-  text-align: center;
+    background: #dbeafe; /* Фон бейджа счетчика */
+    color: #1e40af; /* Цвет цифры в бейдже */
+    font-size: 0.8rem; /* Размер цифр */
+    font-weight: bold; /* Жирный шрифт цифр */
+    padding: 2px 8px; /* Отступы внутри бейджа */
+    border-radius: 12px; /* Закругление бейджа */
+    min-width: 24px; /* Минимальная ширина (для круглого вида) */
+    text-align: center; /* Центрирование цифры */
 }
 
 body.dark-mode .column-count {
-  background: #1e3a5f;
-  color: #93c5fd;
+    background: #1e3a5f; /* Цвет бейджа в темной теме */
+    color: #93c5fd; /* Цвет цифр в темной теме */
 }
 
 .task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+    display: flex; /* Вертикальный список задач */
+    flex-direction: column; /* Задачи в стек */
+    gap: 8px; /* Расстояние между задачами */
+    flex: 1; /* Список занимает все место в колонке */
 }
 
 /* ---- КАРТОЧКИ ЗАДАЧ (создаются через JS) ---- */
 .task-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid #3b82f6;
-  border-radius: 8px;
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  cursor: pointer;
-  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
-  animation: fadeIn 0.25s ease;
+    background: #f8fafc; /* Фон карточки задачи */
+    border: 1px solid #e2e8f0; /* Граница карточки */
+    border-left: 4px solid #3b82f6; /* Полоса приоритета слева */
+    border-radius: 8px; /* Скругление карточки */
+    padding: 10px 12px; /* Внутренние отступы карточки */
+    display: flex; /* Флекс-структура карточки */
+    flex-direction: column; /* Элементы задачи в стек */
+    gap: 8px; /* Расстояние между текстом и кнопками */
+    cursor: pointer; /* Курсор при наведении на задачу */
+    transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; /* Плавность эффектов */
+    animation: fadeIn 0.25s ease; /* Анимация плавного появления */
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(-6px); } /* Начало анимации появления */
+    to { opacity: 1; transform: translateY(0); } /* Конец анимации появления */
 }
 
 .task-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Тень при наведении на задачу */
 }
 
 /* Выделение карточки при клике (добавляется через JS) */
 .task-card.selected {
-  border-color: #f59e0b;
-  background: #fffbeb;
-  box-shadow: 0 0 0 2px #fcd34d;
+    border-color: #f59e0b; /* Цвет рамки при выборе задачи */
+    background: #fffbeb; /* Цвет фона выбранной задачи */
+    box-shadow: 0 0 0 2px #fcd34d; /* Дополнительная подсветка выбора */
 }
 
 body.dark-mode .task-card.selected {
-  background: #2d2010;
-  border-color: #f59e0b;
+    background: #2d2010; /* Фон выбранной задачи в темной теме */
+    border-color: #f59e0b; /* Рамка выбранной задачи в темной теме */
 }
 
 /* Приоритеты (добавляются через JS через data-priority) */
 .task-card[data-priority="high"] {
-  border-left-color: #ef4444;
+    border-left-color: #ef4444; /* Красный цвет для высокого приоритета */
 }
 
 .task-card[data-priority="medium"] {
-  border-left-color: #f59e0b;
+    border-left-color: #f59e0b; /* Желтый цвет для среднего приоритета */
 }
 
 .task-card[data-priority="low"] {
-  border-left-color: #22c55e;
+    border-left-color: #22c55e; /* Зеленый цвет для низкого приоритета */
 }
 
 /* PRO: класс для высокого приоритета */
 .task-card.priority-high {
-  border-left-color: #ef4444;
-  background: #fff5f5;
+    border-left-color: #ef4444; /* Особое оформление высокого приоритета */
+    background: #fff5f5; /* Светло-красный фон карточки */
 }
 
 body.dark-mode .task-card.priority-high {
-  background: #2d1010;
+    background: #2d1010; /* Темно-красный фон в темной теме */
 }
 
 .task-card h3 {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #1e293b;
-  line-height: 1.4;
+    margin: 0; /* Сброс отступов названия задачи */
+    font-size: 0.95rem; /* Размер шрифта текста задачи */
+    color: #1e293b; /* Цвет текста задачи */
+    line-height: 1.4; /* Интервал между строк текста */
 }
 
 .task-card .priority-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-weight: bold;
-  width: fit-content;
+    display: inline-block; /* Компактный бейдж приоритета */
+    font-size: 0.72rem; /* Маленький шрифт бейджа */
+    padding: 2px 7px; /* Отступы внутри бейджа */
+    border-radius: 10px; /* Скругление бейджа */
+    font-weight: bold; /* Жирный шрифт текста бейджа */
+    width: fit-content; /* Ширина по тексту */
 }
 
-.priority-badge.low     { background: #dcfce7; color: #166534; }
-.priority-badge.medium  { background: #fef9c3; color: #854d0e; }
-.priority-badge.high    { background: #fee2e2; color: #991b1b; }
+.priority-badge.low { background: #dcfce7; color: #166534; } /* Цвета бейджа LOW */
+.priority-badge.medium { background: #fef9c3; color: #854d0e; } /* Цвета бейджа MEDIUM */
+.priority-badge.high { background: #fee2e2; color: #991b1b; } /* Цвета бейджа HIGH */
 
 .task-card .card-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+    display: flex; /* Группа кнопок в карточке в ряд */
+    gap: 6px; /* Расстояние между кнопками карточки */
+    flex-wrap: wrap; /* Перенос кнопок в карточке */
 }
 
 .task-card .card-actions button {
-  flex: 1;
-  padding: 5px 8px;
-  font-size: 0.78rem;
-  min-width: 60px;
+    flex: 1; /* Кнопки карточки растягиваются */
+    padding: 5px 8px; /* Размеры кнопок в карточке */
+    font-size: 0.78rem; /* Шрифт кнопок в карточке */
+    min-width: 60px; /* Минимальная ширина кнопок карточки */
 }
 
 /* ---- СЕКЦИЯ ПОДСКАЗОК ---- */
 .hints-section ul {
-  margin: 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    margin: 0; /* Сброс отступов списка подсказок */
+    padding-left: 20px; /* Внутренний отступ для маркеров */
+    display: flex; /* Подсказки в вертикальный список */
+    flex-direction: column; /* Вертикальный стек подсказок */
+    gap: 8px; /* Расстояние между пунктами подсказок */
 }
 
 .hints-section li {
-  font-size: 0.9rem;
-  line-height: 1.5;
+    font-size: 0.9rem; /* Размер шрифта пунктов подсказок */
+    line-height: 1.5; /* Интервал между строк подсказок */
 }
 
 code {
-  background: #f1f5f9;
-  padding: 1px 5px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  color: #0f172a;
-  font-family: 'Courier New', monospace;
+    background: #f1f5f9; /* Фон для выделенного кода в тексте */
+    padding: 1px 5px; /* Отступы вокруг кода */
+    border-radius: 4px; /* Скругление фона кода */
+    font-size: 0.85rem; /* Размер шрифта кода */
+    color: #0f172a; /* Цвет шрифта кода */
+    font-family: 'Courier New', monospace; /* Моноширинный шрифт кода */
 }
 
 body.dark-mode code {
-  background: #334155;
-  color: #e2e8f0;
+    background: #334155; /* Фон кода в темной теме */
+    color: #e2e8f0; /* Цвет кода в темной теме */
 }
 
 /* ---- ЧЕК-ЛИСТ ---- */
 #checklist-section ol {
-  margin: 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    margin: 0; /* Сброс отступов нумерованного списка */
+    padding-left: 20px; /* Отступ для нумерации */
+    display: flex; /* Пункты списка в ряд */
+    flex-direction: column; /* Пункты списка в стек */
+    gap: 6px; /* Расстояние между пунктами списка */
 }
 
 #checklist-section li {
-  font-size: 0.9rem;
-  line-height: 1.5;
+    font-size: 0.9rem; /* Размер шрифта пунктов списка */
+    line-height: 1.5; /* Интервал между строк списка */
 }
