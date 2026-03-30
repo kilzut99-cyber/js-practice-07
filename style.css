@@ -245,14 +245,8 @@ body.dark-mode #task-count {
 
 #board {
     display: grid; /* Включение сеточной верстки для колонок */
-    grid-template-columns: repeat(3, 1fr); /* Создание трех одинаковых колонок */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Создание трех одинаковых колонок */
     gap: 16px; /* Расстояние между колонками */
-}
-
-@media (max-width: 700px) {
-    #board {
-        grid-template-columns: 1fr; /* Переход в одну колонку на мобильных */
-    }
 }
 
 /* ---- КОЛОНКИ ---- */
@@ -368,6 +362,9 @@ body.dark-mode .task-card.priority-high {
     font-size: 0.95rem; /* Размер шрифта текста задачи */
     color: #1e293b; /* Цвет текста задачи */
     line-height: 1.4; /* Интервал между строк текста */
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
 }
 
 .task-card .priority-badge {
